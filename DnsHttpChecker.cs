@@ -5,9 +5,21 @@ using System.Net.Security;
 using System.Text;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 public class DnsHttpChecker
 {
+    public class Result
+    {
+        public IPAddress IP { get; set; }
+        public string Url { get; set; } = "";
+        public string Ptr { get; set; } = "";
+        public string StatusLine { get; set; } = "";
+        public string StatusCode { get; set; } = "";
+        public long TimeMs { get; set; }
+        public string Error { get; set; } = "";
+    }
+
     private readonly string _domain;
     private readonly int _timeoutMs;
 
@@ -17,39 +29,59 @@ public class DnsHttpChecker
         _timeoutMs = timeoutMs;
     }
 
-    public async Task RunAsync()
+    public async Task<List<Result>> CheckAllAsync()
     {
-        Console.WriteLine($"Resolving {_domain} ...");
-        var addresses = await Dns.GetHostAddressesAsync(_domain);
+        var results = new List<Result>();
 
+        IPAddress[] addresses = await Dns.GetHostAddressesAsync(_domain);
         foreach (var ip in addresses)
         {
-            string url = ip.AddressFamily == AddressFamily.InterNetworkV6
-                ? $"https://[{ip}]"
-                : $"https://{ip}";
-
-            string ptr = "(no PTR)";
-            try
-            {
-                var hostEntry = await Dns.GetHostEntryAsync(ip);
-                ptr = hostEntry.HostName;
-            }
-            catch { }
-
-            Console.WriteLine($"\nChecking {url} (Host={_domain}, PTR={ptr})");
-
-            try
-            {
-                var sw = Stopwatch.StartNew();
-                string status = await CheckServerAsync(ip, _domain, 443);
-                sw.Stop();
-                Console.WriteLine($"  -> {status} ({sw.ElapsedMilliseconds} ms)");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"  -> ERROR: {ex.Message}");
-            }
+            var result = await CheckSingleAsync(ip);
+            results.Add(result);
         }
+
+        return results;
+    }
+
+    private async Task<Result> CheckSingleAsync(IPAddress ip)
+    {
+        var res = new Result { IP = ip };
+
+        // Proper URL representation
+        res.Url = ip.AddressFamily == AddressFamily.InterNetworkV6
+            ? $"https://[{ip}]"
+            : $"https://{ip}";
+
+        // PTR (reverse DNS)
+        try
+        {
+            var entry = await Dns.GetHostEntryAsync(ip);
+            res.Ptr = entry.HostName;
+        }
+        catch
+        {
+            res.Ptr = "(no PTR)";
+        }
+
+        try
+        {
+            var sw = Stopwatch.StartNew();
+            string statusLine = await CheckServerAsync(ip, _domain, 443);
+            sw.Stop();
+
+            res.TimeMs = sw.ElapsedMilliseconds;
+            res.StatusLine = statusLine;
+
+            var parts = statusLine.Split(' ');
+            if (parts.Length >= 2 && parts[0].StartsWith("HTTP/"))
+                res.StatusCode = parts[1];
+        }
+        catch (Exception ex)
+        {
+            res.Error = ex.Message;
+        }
+
+        return res;
     }
 
     private async Task<string> CheckServerAsync(IPAddress ip, string domain, int port)
@@ -66,7 +98,6 @@ public class DnsHttpChecker
                 throw new Exception($"SSL validation failed: {errors}");
             });
 
-        // Use domain for SNI + cert validation
         await ssl.AuthenticateAsClientAsync(domain);
 
         string request = $"GET / HTTP/1.1\r\nHost: {domain}\r\nConnection: close\r\n\r\n";
@@ -75,9 +106,9 @@ public class DnsHttpChecker
 
         byte[] buffer = new byte[4096];
         int read = await ssl.ReadAsync(buffer, 0, buffer.Length);
-        string response = Encoding.ASCII.GetString(buffer, 0, read);
+        if (read == 0) return "(no response)";
 
-        string firstLine = response.Split("\r\n")[0];
-        return firstLine;
+        string response = Encoding.ASCII.GetString(buffer, 0, read);
+        return response.Split("\r\n")[0];
     }
 }
