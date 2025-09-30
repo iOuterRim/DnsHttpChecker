@@ -3,8 +3,11 @@ name: Build and Deploy DocFX
 on:
   push:
     branches:
-      - main   # build only on pushes to main
+      - master   # build only on pushes to master
   workflow_dispatch: # allow manual trigger
+
+permissions:
+  contents: write   # <-- allow push to gh-pages
 
 jobs:
   build:
