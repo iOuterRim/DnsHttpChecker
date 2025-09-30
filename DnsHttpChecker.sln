@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36414.22
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DnsHttpChecker", "src\DnsHttpChecker\DnsHttpChecker.csproj", "{D02AEB65-CA55-F335-74FA-311295B12E02}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DnsHttpCheckerTest", "test\DnsHttpCheckerTest.csproj", "{A2FDD63C-AB37-ED36-E901-9389CA16CB2E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D02AEB65-CA55-F335-74FA-311295B12E02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D02AEB65-CA55-F335-74FA-311295B12E02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D02AEB65-CA55-F335-74FA-311295B12E02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D02AEB65-CA55-F335-74FA-311295B12E02}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2FDD63C-AB37-ED36-E901-9389CA16CB2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2FDD63C-AB37-ED36-E901-9389CA16CB2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2FDD63C-AB37-ED36-E901-9389CA16CB2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2FDD63C-AB37-ED36-E901-9389CA16CB2E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {386F3BA3-D288-4300-8C8C-DF042D73F409}
+	EndGlobalSection
+EndGlobal

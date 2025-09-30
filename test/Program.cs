@@ -1,4 +1,6 @@
-﻿class Program
+﻿using DnsHttpCheckerLib;
+
+class Program
 {
     static async Task Main()
     {

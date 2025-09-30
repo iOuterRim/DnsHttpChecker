@@ -1,0 +1,28 @@
+{
+  "metadata": [
+    {
+      "src": [
+        { "files": [ "src/DnsHttpChecker/DnsHttpChecker.csproj" ] }
+      ],
+      "dest": "api",
+      "properties": {
+        "TargetFramework": "net9.0"
+      }
+    }
+  ],
+  "build": {
+    "content": [
+      { "files": [
+        "index.md",
+        "toc.yml",
+        "articles/**.md",
+        "api/**.yml",
+		"api/index.md"
+      ] }
+    ],
+    "resource": [
+      { "files": [ "images/**" ] }
+    ],
+    "dest": "_site"
+  }
+}

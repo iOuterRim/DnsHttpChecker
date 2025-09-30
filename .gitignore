@@ -3,6 +3,13 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+# DocFX output (don't keep in main branch)
+/_site/
+/_temp/
+/obj/
+/api/**.yml
+/api/.manifest
+
 # User-specific files
 *.rsuser
 *.suo
