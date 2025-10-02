@@ -3,9 +3,11 @@ name: Build and Publish Docs
 on:
   push:
     branches:
-      - main
       - master
   pull_request:
+
+permissions:
+  contents: write   # <-- allow push to gh-pages
 
 jobs:
   build:
