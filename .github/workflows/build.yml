@@ -1,0 +1,42 @@
+name: Build and Publish Docs
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore ./src/DnsHttpChecker/DnsHttpChecker.csproj
+
+      - name: Build
+        run: dotnet build ./src/DnsHttpChecker/DnsHttpChecker.csproj --configuration Release --no-restore
+
+      - name: Test
+        run: dotnet test ./test/DnsHttpCheckerTest/DnsHttpCheckerTest.csproj --no-build --verbosity normal
+
+      - name: Install DocFX
+        run: dotnet tool install -g docfx
+
+      - name: Generate Documentation
+        run: docfx docfx.json
+
+      - name: Deploy Documentation to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_site
