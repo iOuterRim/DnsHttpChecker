@@ -117,6 +117,28 @@ namespace DnsHttpCheckerLib
         }
 
         /// <summary>
+        /// Get the fastest working server (HTTP 200 OK) among all resolved IPs.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="Result"/> object for the fastest server, or <c>null</c> if none succeeded.
+        /// </returns>
+        public async Task<Result?> GetFastestServerAsync()
+        {
+            var results = await CheckAllAsync();
+
+            // Filter for healthy servers: only 200 OK
+            var working = results
+                .Where(r => string.IsNullOrEmpty(r.Error) &&
+                            !string.IsNullOrEmpty(r.StatusLine) &&
+                            r.StatusLine.Contains("200"))
+                .OrderBy(r => r.TimeMs)
+                .ToList();
+
+            // Return the fastest working server, or null if none succeeded
+            return working.FirstOrDefault();
+        }
+
+        /// <summary>
         /// Checks a single IP address for HTTPS availability and status.
         /// </summary>
         /// <param name="ip">The target IP address.</param>
