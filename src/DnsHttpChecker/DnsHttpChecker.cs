@@ -44,6 +44,7 @@ namespace DnsHttpCheckerLib
 
             /// <summary>
             /// Full request URL including scheme and host.
+            /// PTR record is used in URL if available.
             /// </summary>
             /// <value>
             /// Defaults to empty string.
@@ -124,11 +125,6 @@ namespace DnsHttpCheckerLib
         {
             var res = new Result { IP = ip };
 
-            // Proper URL representation
-            res.Url = ip.AddressFamily == AddressFamily.InterNetworkV6
-                ? $"https://[{ip}]"
-                : $"https://{ip}";
-
             // PTR (reverse DNS)
             try
             {
@@ -138,6 +134,20 @@ namespace DnsHttpCheckerLib
             catch
             {
                 res.Ptr = "(no PTR)";
+            }
+
+            // Build URL (prefer PTR if available)
+            if (!string.IsNullOrEmpty(res.Ptr))
+            {
+                res.Url = $"https://{res.Ptr}";
+            }
+            else if (ip.AddressFamily == AddressFamily.InterNetworkV6)
+            {
+                res.Url = $"https://[{ip}]";
+            }
+            else
+            {
+                res.Url = $"https://{ip}";
             }
 
             try
