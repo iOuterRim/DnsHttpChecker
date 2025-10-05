@@ -193,6 +193,38 @@ for all resolved IP addresses of a given domain.</p>
       </tr>
     </tbody>
   </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/iOuterRim/DnsHttpChecker/new/master/apiSpec/new?filename=DnsHttpCheckerLib_DnsHttpChecker_GetFastestServerAsync.md&amp;value=---%0Auid%3A%20DnsHttpCheckerLib.DnsHttpChecker.GetFastestServerAsync%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/iOuterRim/DnsHttpChecker/blob/master/src/DnsHttpChecker/DnsHttpChecker.cs/#L125">View Source</a>
+  </span>
+  <a id="DnsHttpCheckerLib_DnsHttpChecker_GetFastestServerAsync_" data-uid="DnsHttpCheckerLib.DnsHttpChecker.GetFastestServerAsync*"></a>
+  <h4 id="DnsHttpCheckerLib_DnsHttpChecker_GetFastestServerAsync" data-uid="DnsHttpCheckerLib.DnsHttpChecker.GetFastestServerAsync">GetFastestServerAsync()</h4>
+  <div class="markdown level1 summary"><p>Get the fastest working server (HTTP 200 OK) among all resolved IPs.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;DnsHttpChecker.Result?&gt; GetFastestServerAsync()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="DnsHttpCheckerLib.DnsHttpChecker.html">DnsHttpChecker</a>.<a class="xref" href="DnsHttpCheckerLib.DnsHttpChecker.Result.html">Result</a>&gt;</td>
+        <td><p>A <a class="xref" href="DnsHttpCheckerLib.DnsHttpChecker.Result.html">DnsHttpChecker.Result</a> object for the fastest server, or <code>null</code> if none succeeded.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
 
 </article>
           </div>

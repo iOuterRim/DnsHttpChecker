@@ -45,6 +45,19 @@ references:
   isSpec: "True"
   fullName: DnsHttpCheckerLib.DnsHttpChecker.CheckAllAsync
   nameWithType: DnsHttpChecker.CheckAllAsync
+- uid: DnsHttpCheckerLib.DnsHttpChecker.GetFastestServerAsync
+  name: GetFastestServerAsync()
+  href: api/DnsHttpCheckerLib.DnsHttpChecker.html#DnsHttpCheckerLib_DnsHttpChecker_GetFastestServerAsync
+  commentId: M:DnsHttpCheckerLib.DnsHttpChecker.GetFastestServerAsync
+  fullName: DnsHttpCheckerLib.DnsHttpChecker.GetFastestServerAsync()
+  nameWithType: DnsHttpChecker.GetFastestServerAsync()
+- uid: DnsHttpCheckerLib.DnsHttpChecker.GetFastestServerAsync*
+  name: GetFastestServerAsync
+  href: api/DnsHttpCheckerLib.DnsHttpChecker.html#DnsHttpCheckerLib_DnsHttpChecker_GetFastestServerAsync_
+  commentId: Overload:DnsHttpCheckerLib.DnsHttpChecker.GetFastestServerAsync
+  isSpec: "True"
+  fullName: DnsHttpCheckerLib.DnsHttpChecker.GetFastestServerAsync
+  nameWithType: DnsHttpChecker.GetFastestServerAsync
 - uid: DnsHttpCheckerLib.DnsHttpChecker.Result
   name: DnsHttpChecker.Result
   href: api/DnsHttpCheckerLib.DnsHttpChecker.Result.html
